@@ -17,8 +17,8 @@ type Category struct {
 }
 
 type Furniture struct {
-	ID          uint   `gorm:"primaryKey"`
-	Name        string `gorm:"unique"`
+	ID          uint   `gorm:"primaryKey" json:"id"`
+	Name        string `gorm:"unique" json:"name"`
 	CategoryID  uint
 	Price       uint
 	Description *string

@@ -3,14 +3,21 @@ package furniture
 import (
 	"github.com/go-chi/render"
 	"log/slog"
-	"mis/storage/models"
 	"mis/utils"
 	"net/http"
 )
 
+type FurnitureDTO struct {
+	ID           uint    `json:"id"`
+	Name         string  `json:"name"`
+	CategoryName string  `json:"categoryName"`
+	Price        uint    `json:"price"`
+	Photo        *string `json:"photo,omitempty"`
+}
+
 type ListResponse struct {
-	TotalCount uint               `json:"totalCount"`
-	Furniture  []models.Furniture `json:"furniture"`
+	TotalCount uint           `json:"totalCount"`
+	Furniture  []FurnitureDTO `json:"furniture"`
 }
 
 func List(log *slog.Logger, repo FurnitureRepo) http.HandlerFunc {
@@ -25,10 +32,21 @@ func List(log *slog.Logger, repo FurnitureRepo) http.HandlerFunc {
 			return
 		}
 
+		furnitureDTOs := make([]FurnitureDTO, 0, len(furniture))
+
+		for _, item := range furniture {
+			furnitureDTOs = append(furnitureDTOs, FurnitureDTO{
+				ID:           item.ID,
+				Name:         item.Name,
+				CategoryName: item.Category.Name,
+				Price:        item.Price,
+				Photo:        item.Photo,
+			})
+		}
 		render.Status(r, http.StatusOK)
 		render.JSON(w, r, utils.NewSuccessResponse(ListResponse{
 			TotalCount: uint(len(furniture)),
-			Furniture:  furniture,
+			Furniture:  furnitureDTOs,
 		}))
 	}
 }

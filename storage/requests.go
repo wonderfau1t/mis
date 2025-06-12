@@ -30,7 +30,7 @@ func (s *Storage) GetStatuses() ([]models.Status, error) {
 
 func (s *Storage) GetFurniture() ([]models.Furniture, error) {
 	var furniture []models.Furniture
-	if err := s.db.Find(&furniture).Error; err != nil {
+	if err := s.db.Preload("Category").Find(&furniture).Error; err != nil {
 		if errors.Is(err, gorm.ErrRecordNotFound) {
 			return furniture, nil
 		}
