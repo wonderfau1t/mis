@@ -103,6 +103,17 @@ func (s *Storage) GetOrders() ([]models.Order, error) {
 	return orders, nil
 }
 
+func (s *Storage) GetOrderByID(orderID uint) (models.Order, error) {
+	var order models.Order
+	if err := s.db.Preload("PartsOfOrder").Preload("PartsOfOrder.Furniture").First(&order, orderID).Error; err != nil {
+		if errors.Is(err, gorm.ErrRecordNotFound) {
+			return order, gorm.ErrRecordNotFound
+		}
+		return order, err
+	}
+	return order, nil
+}
+
 func (s *Storage) UpdateOrderStatus(orderID uint, statusID uint) error {
 	var order models.Order
 	if err := s.db.Preload("PartsOfOrder").First(&order, orderID).Error; err != nil {

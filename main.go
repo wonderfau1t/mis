@@ -53,6 +53,7 @@ func main() {
 	router.Put("/furniture", furniture.Update(logger, db))
 
 	router.Get("/orders", orders.List(logger, db))
+	router.Get("/orders/{id}", orders.Get(logger, db))
 	router.Post("/orders", orders.Add(logger, db))
 	router.Put("/orders", orders.Update(logger, db))
 
