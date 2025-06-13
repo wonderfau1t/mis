@@ -13,6 +13,7 @@ type FurnitureDTO struct {
 	CategoryName string  `json:"categoryName"`
 	Price        uint    `json:"price"`
 	Photo        *string `json:"photo,omitempty"`
+	Description  *string `json:"description,omitempty"`
 }
 
 type ListResponse struct {
@@ -41,6 +42,7 @@ func List(log *slog.Logger, repo FurnitureRepo) http.HandlerFunc {
 				CategoryName: item.Category.Name,
 				Price:        item.Price,
 				Photo:        item.Photo,
+				Description:  item.Description,
 			})
 		}
 		render.Status(r, http.StatusOK)

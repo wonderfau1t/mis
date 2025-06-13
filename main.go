@@ -48,6 +48,7 @@ func main() {
 	router.Get("/categories", categories.List(logger, db))
 
 	router.Get("/furniture", furniture.List(logger, db))
+	router.Get("/furniture/{id}", furniture.Get(logger, db))
 	router.Post("/furniture", furniture.Add(logger, db))
 	router.Put("/furniture", furniture.Update(logger, db))
 
