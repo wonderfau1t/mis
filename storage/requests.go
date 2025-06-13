@@ -68,7 +68,7 @@ func (s *Storage) AddOrder(order models.Order) (uint, error) {
 
 func (s *Storage) GetFurnitureByID(id uint) (models.Furniture, error) {
 	var furniture models.Furniture
-	if err := s.db.First(&furniture, id).Error; err != nil {
+	if err := s.db.Preload("Category").First(&furniture, id).Error; err != nil {
 		if errors.Is(err, gorm.ErrRecordNotFound) {
 			return furniture, gorm.ErrRecordNotFound
 		}

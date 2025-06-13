@@ -1,6 +1,7 @@
 package furniture
 
 import (
+	"github.com/go-chi/chi/v5"
 	"github.com/go-chi/render"
 	"log/slog"
 	"mis/utils"
@@ -16,7 +17,7 @@ func Get(log *slog.Logger, db FurnitureRepo) http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
 		const fn = "handlers.furniture.Get"
 		log := log.With(slog.String("fn", fn))
-		id := r.URL.Query().Get("id")
+		id := chi.URLParam(r, "id")
 		intID, _ := strconv.Atoi(id)
 		furniture, err := db.GetFurnitureByID(uint(intID))
 		if err != nil {

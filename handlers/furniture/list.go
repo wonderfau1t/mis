@@ -13,7 +13,7 @@ type FurnitureDTO struct {
 	CategoryName string  `json:"categoryName"`
 	Price        uint    `json:"price"`
 	Photo        *string `json:"photo,omitempty"`
-	Description  *string `json:"description,omitempty"`
+	Description  *string `json:"description"`
 }
 
 type ListResponse struct {
