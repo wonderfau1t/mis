@@ -12,6 +12,7 @@ import (
 type FurnitureDTOtoUpdate struct {
 	ID    uint   `json:"id"`
 	Name  string `json:"name"`
+	Price uint   `json:"price"`
 	Count int    `json:"count"`
 }
 
@@ -69,6 +70,7 @@ func Get(log *slog.Logger, db OrdersRepo) http.HandlerFunc {
 			orderDTO.Furniture = append(orderDTO.Furniture, FurnitureDTOtoUpdate{
 				ID:    furniture.ID,
 				Name:  furniture.Name,
+				Price: furniture.Price,
 				Count: count,
 			})
 		}
