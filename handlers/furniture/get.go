@@ -1,6 +1,7 @@
 package furniture
 
 import (
+	"fmt"
 	"github.com/go-chi/chi/v5"
 	"github.com/go-chi/render"
 	"log/slog"
@@ -30,7 +31,7 @@ func Get(log *slog.Logger, db FurnitureRepo) http.HandlerFunc {
 			Name:         furniture.Name,
 			CategoryName: furniture.Category.Name,
 			Price:        furniture.Price,
-			Photo:        furniture.Photo,
+			Photo:        fmt.Sprintf("/furniture/%d/photo", furniture.ID),
 			Description:  furniture.Description,
 		}
 

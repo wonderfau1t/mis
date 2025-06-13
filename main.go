@@ -44,6 +44,8 @@ func main() {
 		render.JSON(w, r, map[string]string{"message": "Hello, World!"})
 	})
 
+	router.Get("/furniture/{id}/photo", furniture.GetPhoto(logger, db))
+
 	router.Get("/statuses", statuses.List(logger, db))
 	router.Get("/categories", categories.List(logger, db))
 

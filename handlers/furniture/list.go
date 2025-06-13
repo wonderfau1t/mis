@@ -1,6 +1,7 @@
 package furniture
 
 import (
+	"fmt"
 	"github.com/go-chi/render"
 	"log/slog"
 	"mis/utils"
@@ -12,7 +13,7 @@ type FurnitureDTO struct {
 	Name         string  `json:"name"`
 	CategoryName string  `json:"categoryName"`
 	Price        uint    `json:"price"`
-	Photo        *string `json:"photo,omitempty"`
+	Photo        string  `json:"photo,omitempty"`
 	Description  *string `json:"description"`
 }
 
@@ -41,7 +42,7 @@ func List(log *slog.Logger, repo FurnitureRepo) http.HandlerFunc {
 				Name:         item.Name,
 				CategoryName: item.Category.Name,
 				Price:        item.Price,
-				Photo:        item.Photo,
+				Photo:        fmt.Sprintf("/furniture/%d/photo", item.ID),
 				Description:  item.Description,
 			})
 		}
